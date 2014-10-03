@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "aigor" %></title>
 
-    <%= stylesheet_link_tag    "application" %>
+    <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
     <%= csrf_meta_tags %>
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <%= yield %>
-    <%= javascript_include_tag "application" %>
-  </body>
+<div class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+
+        <nav class="tab-bar">
+            <section class="left-small">
+                <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+            </section>
+
+            <section class="middle tab-bar-section">
+                <h1 class="title">Aigor</h1>
+            </section>
+        </nav>
+
+
+        <!-- Off Canvas Menu -->
+        <aside class="left-off-canvas-menu">
+            <!-- whatever you want goes here -->
+            <div class="text-center">
+                <img class="aigor-face"></li>
+
+                <p class="aigor-face">yes doctor?</p>
+
+            </div>
+            <ul>
+            <li><%= link_to 'Lights', root_path %></li>
+            <li><%= link_to 'Status', '#' %></li>
+            </ul>
+        </aside>
+
+        <section class="main-section">
+            <%= yield %>
+        </section>
+
+        <!-- close the off-canvas menu -->
+        <a class="exit-off-canvas"></a>
+
+    </div>
+</div>
+
+
+<%= javascript_include_tag "application" %>
+</body>
 </html>

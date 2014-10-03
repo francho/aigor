@@ -1,0 +1,37 @@
+body {
+  height: 100%;
+}
+
+.off-canvas-wrap {
+  height: 100%;
+
+  .inner-wrap {
+    height: 100%;
+  }
+
+  .left-off-canvas-menu {
+
+    img.aigor-face {
+      width: 160px;
+      height: 160px;
+      border-radius: 80px;
+      -webkit-border-radius: 80px;
+      -moz-border-radius: 80px;
+      background: url(asset_path('aigor.jpg')) no-repeat;
+
+      border: 3px solid #F0F0F0;
+      margin-top: 20px;
+    }
+
+    p.aigor-face {
+      font-size: 0.9em;
+      color: #F0F0F0;
+    }
+
+    ul {
+      margin: 0.5em;
+      list-style: none;
+    }
+
+  }
+}
