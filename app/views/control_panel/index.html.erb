@@ -2,12 +2,43 @@
 
     <div class="row">
         <div class="small-8 columns">
-            <p>light</p>
+            <p>leds</p>
         </div>
         <div class="small-4 columns">
             <div class="switch round">
-                <input id="lightSwitch" type="checkbox" name="light">
-                <label for="lightSwitch">light</label>
+                <input id="leds-switch" type="checkbox" name="light">
+                <label id="leds-switch-label" for="leds-switch">light</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-3 columns">red</div>
+        <div class="small-9 columns">
+            <div id="slide-red" class="range-slider round" data-slider>
+                <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                <span class="range-slider-active-segment"></span>
+                <input type="hidden">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-3 columns">green</div>
+        <div class="small-9 columns">
+            <div id="slide-green" class="range-slider round" data-slider>
+                <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                <span class="range-slider-active-segment"></span>
+                <input type="hidden">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-3 columns">blue</div>
+        <div class="small-9 columns">
+            <div id="slide-blue" class="range-slider round" data-slider>
+                <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                <span class="range-slider-active-segment"></span>
+                <input type="hidden">
             </div>
         </div>
     </div>
