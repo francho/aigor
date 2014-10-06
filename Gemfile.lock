@@ -27,6 +27,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     coffee-rails (4.0.1)
@@ -36,12 +37,34 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    cookiejar (0.3.2)
+    em-http-request (1.1.2)
+      addressable (>= 2.3.4)
+      cookiejar
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.0)
+      eventmachine (>= 1.0.0.beta.4)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.2.1)
+    faye (1.0.3)
+      cookiejar (>= 0.3.0)
+      em-http-request (>= 0.3.0)
+      eventmachine (>= 0.12.0)
+      faye-websocket (>= 0.7.0)
+      multi_json (>= 1.0.0)
+      rack (>= 1.0.0)
+      websocket-driver (>= 0.3.0)
+    faye-websocket (0.7.4)
+      eventmachine (>= 0.12.0)
+      websocket-driver (>= 0.3.1)
     foundation-rails (5.4.3.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
     hike (1.2.3)
+    http_parser.rb (0.6.0)
     i18n (0.6.11)
     jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
@@ -111,12 +134,14 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    websocket-driver (0.3.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  faye
   foundation-rails
   jbuilder (~> 2.0)
   jquery-rails
