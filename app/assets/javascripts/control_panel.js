@@ -31,6 +31,14 @@
     $('#leds-switch').on('click', function() {
       switchLeds($(this).checked);
     });
+
+    $(function() {
+      var faye = new Faye.Client('http://localhost:9292/faye');
+      alert('subscribing!')
+      faye.subscribe('/control_panel/messages', function(data) {
+        console.log(data);
+      });
+    });
   });
 
 })();
