@@ -57,9 +57,12 @@ GEM
       multi_json (>= 1.0.0)
       rack (>= 1.0.0)
       websocket-driver (>= 0.3.0)
-    faye-websocket (0.7.4)
+    faye-rails (2.0.0)
+      eventmachine (~> 1.0.0)
+      faye (~> 1.0.1)
+    faye-websocket (0.7.5)
       eventmachine (>= 0.12.0)
-      websocket-driver (>= 0.3.1)
+      websocket-driver (>= 0.3.5)
     foundation-rails (5.4.3.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
@@ -134,14 +137,14 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    websocket-driver (0.3.4)
+    websocket-driver (0.3.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
-  faye
+  faye-rails
   foundation-rails
   jbuilder (~> 2.0)
   jquery-rails

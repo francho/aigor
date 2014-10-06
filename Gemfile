@@ -41,4 +41,4 @@ gem 'spring',        group: :development
 gem 'foundation-rails'
 
 # Websockets
-gem 'faye'
+gem 'faye-rails'
