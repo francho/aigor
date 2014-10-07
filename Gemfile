@@ -42,3 +42,11 @@ gem 'foundation-rails'
 
 # Websockets
 gem 'faye-rails'
+
+group :test do
+  gem 'compass'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+
+  gem 'launchy'  # Launch browser when save_and_open_page method is called
+end
