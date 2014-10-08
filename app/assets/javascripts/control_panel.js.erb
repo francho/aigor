@@ -1,7 +1,6 @@
 'use strict';
 
 (function() {
-
   function slide2hex(slideSelector) {
     var dec = parseInt($(slideSelector).attr('data-slider') * 255 / 100);
     var hex = dec.toString(16);
@@ -9,8 +8,8 @@
   }
 
   function hex2slide(slideSelector, hex) {
-    var dec = parseInt(hex,16);
-    var value = dec * 100 / 255
+    var dec = parseInt(hex, 16);
+    var value = dec * 100 / 255;
     $(slideSelector).foundation('slider', 'set_value', value);
   }
 
@@ -28,19 +27,19 @@
   function switchLeds(event) {
     colorizeLedsSwitch();
     if(typeof event !== 'undefined') {
-        $.ajax({
-            type: 'POST',
-            url : "control_panel/switch_led.json",
-            data: {
-                power_on: $('#leds-switch').prop('checked'),
-                color   : {
-                    red  : slide2hex('#slide-red'),
-                    green: slide2hex('#slide-green'),
-                    blue : slide2hex('#slide-blue')
-                }
-            }
-        });
-      }
+      $.ajax({
+        type: 'POST',
+        url : "control_panel/switch_led.json",
+        data: {
+          power_on: $('#leds-switch').prop('checked'),
+          color   : {
+            red  : slide2hex('#slide-red'),
+            green: slide2hex('#slide-green'),
+            blue : slide2hex('#slide-blue')
+          }
+        }
+      });
+    }
   }
 
   function updatePanel(data) {
