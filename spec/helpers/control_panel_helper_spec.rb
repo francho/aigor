@@ -9,7 +9,7 @@ describe ControlPanelHelper do
       allow(Net::HTTP).to receive(:post_form)
       ControlPanelHelper.websocket_broadcast(channel, params)
 
-      expected_url = URI.parse('http://192.168.33.2:9292/faye')
+      expected_url = URI.parse(Rails.application.config.aigor.websockets_url)
       expected_message = {:message => {:channel => channel, :data => params}.to_json}
 
       expect(Net::HTTP).to have_received(:post_form).with(expected_url, expected_message)
