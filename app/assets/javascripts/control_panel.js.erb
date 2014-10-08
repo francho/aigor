@@ -60,7 +60,7 @@
   });
 
   $(function() {
-    var faye = new Faye.Client('http://192.168.33.2:9292/faye');
+    var faye = new Faye.Client('<%= Rails.application.config.aigor.websockets_url %>');
     faye.subscribe('/control_panel/messages', updatePanel);
   });
 
