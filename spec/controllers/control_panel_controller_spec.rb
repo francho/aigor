@@ -21,7 +21,7 @@ describe ControlPanelController do
     describe 'switch_led' do
       before do
         allow(ControlPanelHelper).to receive(:websocket_broadcast)
-        post :switch_led, format: :json, power_on: true, color: [ red: 'ff', green: 'aa', blue: 'ff' ]
+        post :switch_led, :format => :json, :power_on => true, :color => [ :red => 'ff', :green => 'aa', :blue => 'ff' ]
       end
 
       it 'accept POST' do
