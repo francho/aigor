@@ -20,7 +20,7 @@ describe ControlPanelController do
 
     describe 'switch_led' do
       before do
-        allow(ApplicationHelper).to receive(:websocket_broadcast)
+        allow(ControlPanelHelper).to receive(:websocket_broadcast)
         post :switch_led, format: :json, power_on: true, color: [ red: 'ff', green: 'aa', blue: 'ff' ]
       end
 
@@ -33,7 +33,7 @@ describe ControlPanelController do
       end
 
       it 'emit a websocket message' do
-        expect(ApplicationHelper).to have_received(:websocket_broadcast)
+        expect(ControlPanelHelper).to have_received(:websocket_broadcast)
       end
     end
 

@@ -6,7 +6,7 @@ class ControlPanelController < ApplicationController
   end
 
   def switch_led
-    ApplicationHelper.websocket_broadcast('/control_panel/messages', params)
+    ControlPanelHelper.websocket_broadcast('/control_panel/messages', params)
     respond_with do |format|
       format.json { render :text => "ack" }
     end
