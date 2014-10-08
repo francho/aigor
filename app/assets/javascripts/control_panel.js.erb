@@ -25,21 +25,22 @@
     $('#leds-switch-label').css({'background': rgb});
   }
 
-  function switchLeds() {
-    console.log('switchLeds');
+  function switchLeds(event) {
     colorizeLedsSwitch();
-    $.ajax({
-      type: 'POST',
-      url : "control_panel/switch_led.json",
-      data: {
-        power_on: $('#leds-switch').prop('checked'),
-        color   : {
-          red  : slide2hex('#slide-red'),
-          green: slide2hex('#slide-green'),
-          blue : slide2hex('#slide-blue')
-        }
+    if(typeof event !== 'undefined') {
+        $.ajax({
+            type: 'POST',
+            url : "control_panel/switch_led.json",
+            data: {
+                power_on: $('#leds-switch').prop('checked'),
+                color   : {
+                    red  : slide2hex('#slide-red'),
+                    green: slide2hex('#slide-green'),
+                    blue : slide2hex('#slide-blue')
+                }
+            }
+        });
       }
-    });
   }
 
   function updatePanel(data) {
