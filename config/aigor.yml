@@ -1,0 +1,12 @@
+default: &default
+  websockets_url: 'http://localhost:9292/faye'
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+  websockets_url: 'http://192.168.33.2:9292/faye'
+
+production:
+  <<: *default

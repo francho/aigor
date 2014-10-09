@@ -1,7 +1,6 @@
 'use strict';
 
 (function() {
-
   function slide2hex(slideSelector) {
     var dec = parseInt($(slideSelector).attr('data-slider') * 255 / 100);
     var hex = dec.toString(16);
@@ -9,8 +8,8 @@
   }
 
   function hex2slide(slideSelector, hex) {
-    var dec = parseInt(hex,16);
-    var value = dec * 100 / 255
+    var dec = parseInt(hex, 16);
+    var value = dec * 100 / 255;
     $(slideSelector).foundation('slider', 'set_value', value);
   }
 
@@ -25,21 +24,22 @@
     $('#leds-switch-label').css({'background': rgb});
   }
 
-  function switchLeds() {
-    console.log('switchLeds');
+  function switchLeds(event) {
     colorizeLedsSwitch();
-    $.ajax({
-      type: 'POST',
-      url : "control_panel/switch_led.json",
-      data: {
-        power_on: $('#leds-switch').prop('checked'),
-        color   : {
-          red  : slide2hex('#slide-red'),
-          green: slide2hex('#slide-green'),
-          blue : slide2hex('#slide-blue')
+    if(typeof event !== 'undefined') {
+      $.ajax({
+        type: 'POST',
+        url : "control_panel/switch_led.json",
+        data: {
+          power_on: $('#leds-switch').prop('checked'),
+          color   : {
+            red  : slide2hex('#slide-red'),
+            green: slide2hex('#slide-green'),
+            blue : slide2hex('#slide-blue')
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   function updatePanel(data) {
@@ -60,7 +60,7 @@
   });
 
   $(function() {
-    var faye = new Faye.Client('http://192.168.33.2:9292/faye');
+    var faye = new Faye.Client('<%= Rails.application.config.aigor.websockets_url %>');
     faye.subscribe('/control_panel/messages', updatePanel);
   });
 
