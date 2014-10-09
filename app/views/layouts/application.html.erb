@@ -53,6 +53,6 @@
 </div>
 
 
-<%= javascript_include_tag "application", "http://192.168.33.2:9292/faye.js" %>
+<%= javascript_include_tag "application", Rails.application.config.aigor.websockets_url + ".js" %>
 </body>
 </html>
