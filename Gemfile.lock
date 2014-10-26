@@ -140,6 +140,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    serialport (1.3.1)
     spring (1.1.3)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -184,6 +185,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  serialport
   spring
   sqlite3
   turbolinks

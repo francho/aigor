@@ -43,6 +43,9 @@ gem 'foundation-rails'
 # Websockets
 gem 'faye-rails'
 
+# SerialPort
+gem 'serialport'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
