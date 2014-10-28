@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root 'control_panel#index'
+  post 'api/colorize_leds'
 
-  post '/control_panel/switch_led' => 'control_panel#switch_led'
+  root 'control_panel#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
