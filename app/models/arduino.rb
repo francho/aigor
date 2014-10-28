@@ -1,8 +1,6 @@
 class Arduino
   include Singleton
 
-  attr_reader :arduino
-
   def initialize
     port_str  = "/dev/cu.usbmodem1411" #may be different for you
     baud_rate = 115200
@@ -10,15 +8,19 @@ class Arduino
     stop_bits = 1
     parity    = SerialPort::NONE
 
-    @arduino = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
-    @arduino.read_timeout = 100
+    @serial_port = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
+    @serial_port.read_timeout = 100
+    puts @serial_port.flush_input
+    puts @serial_port.flush_output
   end
 
+  attr_reader :serial_port
+
   def write(message)
-    @arduino.write "#{@command}\n"
+    @serial_port.write "#{message}\n"
   end
 
   def readlines
-    @arduino.readlines
+    @serial_port.readlines
   end
 end
