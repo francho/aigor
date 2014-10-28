@@ -6,7 +6,7 @@
   function ledsService() {
     $.ajax({
       type: 'POST',
-      url : 'control_panel/switch_led.json',
+      url : 'api/colorize_leds.json',
       data: {
         power_on: $('#leds-switch').prop('checked'),
         color   : {
@@ -16,11 +16,6 @@
         }
       }
     });
-  }
-
-  function callLedsService() {
-    window.clearTimeout(ledTimeout);
-    ledTimeout = setTimeout(ledsService, 500);
   }
 
   function slide2value(slideSelector) {
@@ -46,7 +41,8 @@
   function switchLeds(event) {
     colorizeLedsSwitch();
     if(typeof event !== 'undefined') {
-      callLedsService();
+      window.clearTimeout(ledTimeout);
+      ledTimeout = setTimeout(ledsService, 500);
     }
   }
 
@@ -60,14 +56,10 @@
     }
   }
 
-  $(function() {
-    $('#slide-red').on('change.fndtn.slider', switchLeds);
-    $('#slide-green').on('change.fndtn.slider', switchLeds);
-    $('#slide-blue').on('change.fndtn.slider', switchLeds);
+  $(function(){
+    $('[data-slider]').on('change.fndtn.slider', switchLeds);
     $('#leds-switch').click(switchLeds);
-  });
 
-  $(function() {
     var faye = new Faye.Client('<%= Rails.application.config.aigor.websockets_url %>');
     faye.subscribe('/control_panel/messages', updatePanel);
   });
