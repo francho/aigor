@@ -1,12 +1,18 @@
 default: &default
   websockets_url: 'http://localhost:9292/faye'
+  arduino:
+    port: "/dev/cu.usbmodem1411"
+    baud_rate: 115200
+    data_bits: 8
+    stop_bits: 1
+    parity: SerialPort::NONE
 
 test:
   <<: *default
 
 development:
   <<: *default
-  websockets_url: 'http://192.168.33.2:9292/faye'
+  websockets_url: 'http://192.168.33.5:9292/faye'
 
 production:
   <<: *default

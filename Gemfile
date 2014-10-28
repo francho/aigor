@@ -43,8 +43,17 @@ gem 'foundation-rails'
 # Websockets
 gem 'faye-rails'
 
+# SerialPort
+gem 'serialport'
+
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec', github: 'rspec/rspec'
+  gem 'rspec-rails', github: 'rspec/rspec-rails'
+  gem 'rspec-core', github: 'rspec/rspec-core'
+  gem 'rspec-mocks', github: 'rspec/rspec-mocks'
+  gem 'rspec-expectations', github: 'rspec/rspec-expectations'
+  gem 'rspec-support', github: 'rspec/rspec-support'
+
   gem 'capybara'
   gem 'capybara-webkit'
 

@@ -1,20 +1,34 @@
 'use strict';
 
 (function() {
-  function slide2hex(slideSelector) {
-    var dec = parseInt($(slideSelector).attr('data-slider') * 255 / 100);
-    var hex = dec.toString(16);
-    return hex.length === 1 ? '0' + hex : hex;
+  var ledTimeout = null;
+
+  function ledsService() {
+    $.ajax({
+      type: 'POST',
+      url : 'api/colorize_leds.json',
+      data: {
+        power_on: $('#leds-switch').prop('checked'),
+        color   : {
+          red  : slide2value('#slide-red'),
+          green: slide2value('#slide-green'),
+          blue : slide2value('#slide-blue')
+        }
+      }
+    });
   }
 
-  function hex2slide(slideSelector, hex) {
-    var dec = parseInt(hex, 16);
+  function slide2value(slideSelector) {
+    return parseInt($(slideSelector).attr('data-slider') * 255 / 100);
+  }
+
+  function value2slide(slideSelector, dec) {
     var value = dec * 100 / 255;
     $(slideSelector).foundation('slider', 'set_value', value);
   }
 
   function getSelectedRgbColor() {
-    return '#' + slide2hex('#slide-red') + slide2hex('#slide-green') + slide2hex('#slide-blue');
+    return 'rgb(' + slide2value('#slide-red') + ',' + slide2value('#slide-green') + ',' + slide2value('#slide-blue') + ')';
   }
 
   function colorizeLedsSwitch() {
@@ -27,39 +41,25 @@
   function switchLeds(event) {
     colorizeLedsSwitch();
     if(typeof event !== 'undefined') {
-      $.ajax({
-        type: 'POST',
-        url : "control_panel/switch_led.json",
-        data: {
-          power_on: $('#leds-switch').prop('checked'),
-          color   : {
-            red  : slide2hex('#slide-red'),
-            green: slide2hex('#slide-green'),
-            blue : slide2hex('#slide-blue')
-          }
-        }
-      });
+      window.clearTimeout(ledTimeout);
+      ledTimeout = setTimeout(ledsService, 500);
     }
   }
 
   function updatePanel(data) {
     if(data.action === 'switch_led') {
       $('#leds-switch').prop('checked', data.power_on === 'true');
-      hex2slide('#slide-red', data.color.red);
-      hex2slide('#slide-green', data.color.green);
-      hex2slide('#slide-blue', data.color.blue);
+      value2slide('#slide-red', data.color.red);
+      value2slide('#slide-green', data.color.green);
+      value2slide('#slide-blue', data.color.blue);
       colorizeLedsSwitch();
     }
   }
 
-  $(function() {
-    $('#slide-red').on('change.fndtn.slider', switchLeds);
-    $('#slide-green').on('change.fndtn.slider', switchLeds);
-    $('#slide-blue').on('change.fndtn.slider', switchLeds);
+  $(function(){
+    $('[data-slider]').on('change.fndtn.slider', switchLeds);
     $('#leds-switch').click(switchLeds);
-  });
 
-  $(function() {
     var faye = new Faye.Client('<%= Rails.application.config.aigor.websockets_url %>');
     faye.subscribe('/control_panel/messages', updatePanel);
   });
