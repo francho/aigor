@@ -3,7 +3,7 @@ lock '3.2.1'
 
 set :application, 'aigor'
 set :repo_url, 'https://github.com/francho/aigor.git'
-set :branch, 'master'
+set :branch, 'capistrano'
 
 # Capistrano-rails gem
 set :rails_env, 'production'

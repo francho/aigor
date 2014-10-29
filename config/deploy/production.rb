@@ -6,7 +6,6 @@
 
 role :app, %w{pi@192.168.33.3}
 role :web, %w{pi@192.168.33.3}
-role :db,  %w{pi@192.168.33.3}
 
 set :deploy_to, '/home/pi/aigor'
 
