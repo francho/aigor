@@ -16,10 +16,7 @@ describe ArduinoCommand do
   let(:arduino_command) { ArduinoCommand.new }
 
   before do
-    class_spy('Arduino')
-    instance_spy('Arduino.instance')
-    allow(Arduino.instance).to receive(:write)
-    # allow(SerialPort).to receive(:new).and_return(serial_port)
+    allow(Arduino).to receive(:instance) { double('Arduino').as_null_object }
   end
 
   describe 'execute' do
@@ -31,7 +28,7 @@ describe ArduinoCommand do
       arduino_command.command = 'hi dude'
       arduino_command.execute!
 
-      expect(Arduino.instance).to have_received(:write)
+      expect(arduino_command.hardware).to have_received(:write)
     end
   end
 end

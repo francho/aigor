@@ -4,8 +4,10 @@ describe ApiController, :type => :controller do
 
   describe 'POST colorize_leds' do
     before do
+      allow(Arduino).to receive(:instance) { double('Arduino').as_null_object }
       allow(ApiHelper).to receive(:websocket_broadcast)
-      post :colorize_leds, :format => :json, :power_on => true, :color => { :red => 100, :green => 150, :blue => 200 }
+
+      post :colorize_leds, :format => :json, :power_on => true, :color => {:red => 100, :green => 150, :blue => 200}
     end
 
     it 'accept POST' do

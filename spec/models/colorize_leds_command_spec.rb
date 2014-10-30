@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe ColorizeLedsCommand do
+  before do
+    allow(Arduino).to receive(:instance) { double('Arduino').as_null_object }
+  end
 
   describe 'send the rgb command' do
     it '!' do

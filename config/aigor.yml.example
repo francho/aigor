@@ -11,6 +11,10 @@ test:
   <<: *default
   arduino:
     port: "/dev/null"
+    baud_rate: 115200
+    data_bits: 8
+    stop_bits: 1
+    parity: SerialPort::NONE
 
 development:
   <<: *default
@@ -21,3 +25,7 @@ production:
   websockets_url: 'http://192.168.33.3:9292/faye'
   arduino:
     port: "/dev/ttyACM0"
+    baud_rate: 115200
+    data_bits: 8
+    stop_bits: 1
+    parity: SerialPort::NONE
