@@ -60,3 +60,15 @@ group :development, :test do
 
   gem 'launchy' # Launch browser when save_and_open_page method is called
 end
+
+group :development do
+  gem 'capistrano',  '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+end
+
+group :production do
+  gem 'puma'
+  gem 'foreman'
+end
