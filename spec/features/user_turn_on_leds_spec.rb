@@ -1,25 +1,28 @@
 require 'spec_helper'
 
-feature 'Switch leds' do
+feature 'leds control' do
 
   before do
     visit(root_path)
+    page.execute_script 'window.Faye = {}'
+
+    expect(page).not_to have_errors
   end
 
-  scenario 'it has a button to switch leds' do
-    expect(page).to have_selector('input[type=checkbox]#leds-switch')
-    # page.execute_script %($('leds-switch-label').click())
-  end
+    it 'it has a button to switch leds', :js => true do
+      expect(page).to have_selector('input[type=checkbox]#leds-switch')
+    end
 
-  scenario 'it has a red selector' do
+
+  it 'it has a red selector', :js => true  do
     expect(page).to have_selector('#slide-red')
   end
 
-  scenario 'it has a green selector' do
+  it 'it has a green selector', :js => true  do
     expect(page).to have_selector('#slide-green')
   end
 
-  scenario 'it has a blue selector' do
+  it 'it has a blue selector', :js => true  do
     expect(page).to have_selector('#slide-blue')
   end
 end

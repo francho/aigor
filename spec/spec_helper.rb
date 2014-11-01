@@ -5,9 +5,11 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/webkit/matchers'
+require 'webmock/rspec'
 
 
 Capybara.javascript_driver = :webkit
+WebMock.disable_net_connect!(allow_localhost: true)
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -47,4 +49,15 @@ RSpec.configure do |config|
 
   config.include(Capybara::Webkit::RspecMatchers, :type => :feature)
 
+  config.before(:each) do
+    WebMock.stub_request(:any, 'fayemock.me').with(
+      headers: {'Content-Type' => 'text/javascript; charset=utf-8'},
+      body: <<-EOT
+      (function() {
+        window.Faye || (window.Faye = {});
+console.log('******************');
+      }).call(this)
+      EOT
+    )
+  end
 end
