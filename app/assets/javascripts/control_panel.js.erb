@@ -3,65 +3,121 @@
 (function() {
   var ledTimeout = null;
 
-  function ledsService() {
+  function callLedsService(red, green, blue) {
     $.ajax({
       type: 'POST',
       url : 'api/colorize_leds.json',
       data: {
         power_on: $('#leds-switch').prop('checked'),
         color   : {
-          red  : slide2value('#slide-red'),
-          green: slide2value('#slide-green'),
-          blue : slide2value('#slide-blue')
+          red  : red,
+          green: green,
+          blue : blue
         }
       }
     });
   }
 
-  function slide2value(slideSelector) {
-    return parseInt($(slideSelector).attr('data-slider') * 255 / 100);
+  function setColor(red, green, blue) {
+    window.clearTimeout(ledTimeout);
+    ledTimeout = setTimeout(function() {
+      callLedsService(red, green, blue)
+    }, 500);
   }
 
-  function value2slide(slideSelector, dec) {
-    var value = dec * 100 / 255;
-    $(slideSelector).foundation('slider', 'set_value', value);
+  function drawRouletteWheel() {
+    var colors = [
+      '#FF6666',
+      '#FF0000',
+      '#FB9902',
+      '#FFFF00',
+      '#86FF01',
+      '#00FF00',
+      '#0391CE',
+      '#0000FF',
+      '#3D01A5',
+      '#8601AF'];
+
+    var startAngle = 0;
+    var arc = Math.PI / (colors.length / 2);
+
+    var canvas = $('#canvas')[0];
+    $('#canvas').attr('width', $('#lights-section').width()); //max width
+    $('#canvas').attr('height', $('#lights-section').height()); //max height
+
+    if(!canvas.getContext) {
+      return;
+    }
+    var width = $('#canvas').width();
+    var height = $('#canvas').height();
+    var outsideRadius = Math.round(Math.min(width, height) / 2) - 20;
+
+    var centerX = Math.round(width / 2);
+    var centerY = Math.round(height / 2);
+
+    console.log(width + 'x' + height, ' - ' + outsideRadius + ' ' + centerX + ',' + centerY);
+    var insideRadius = 70;
+
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
+
+    for(var i = 0; i < colors.length; i++) {
+      var angle = startAngle + i * arc;
+      ctx.fillStyle = colors[i];
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, outsideRadius, angle, angle + arc, false);
+      ctx.arc(centerX, centerY, insideRadius, angle + arc, angle, true);
+      ctx.stroke();
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, insideRadius, Math.PI, 0, true);
+    ctx.stroke();
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(centerX - insideRadius, centerY);
+    ctx.lineTo(centerX + insideRadius, centerY);
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, insideRadius, 0, Math.PI, true);
+    ctx.stroke();
+    ctx.fillStyle = 'white';
+    ctx.closePath();
+
+    ctx.fill();
+    $('#canvas').on('click', onColorPicker);
   }
 
-  function getSelectedRgbColor() {
-    return 'rgb(' + slide2value('#slide-red') + ',' + slide2value('#slide-green') + ',' + slide2value('#slide-blue') + ')';
+  function onColorPicker(event) {
+    var canvas = $('#canvas')[0];
+    var pixelData = canvas.getContext('2d').getImageData(event.offsetX, event.offsetY, 1, 1).data;
+
+    setColor(pixelData[0],pixelData[1],pixelData[2]);
   }
 
-  function colorizeLedsSwitch() {
-    var ledsOn = $('#leds-switch').prop('checked');
-    var rgb = ledsOn ? getSelectedRgbColor() : '';
-
-    $('#leds-switch-label').css({'background': rgb});
-  }
-
-  function switchLeds(event) {
-    colorizeLedsSwitch();
-    if(typeof event !== 'undefined') {
-      window.clearTimeout(ledTimeout);
-      ledTimeout = setTimeout(ledsService, 500);
+  function onMessageReceived(data) {
+    if(data.action === 'colorize_leds') {
+      $('.main-section').css({'background': 'rgb(' + data.color.red + ',' + data.color.green + ',' + data.color.blue + ')'});
     }
   }
 
-  function updatePanel(data) {
-    if(data.action === 'switch_led') {
-      $('#leds-switch').prop('checked', data.power_on === 'true');
-      value2slide('#slide-red', data.color.red);
-      value2slide('#slide-green', data.color.green);
-      value2slide('#slide-blue', data.color.blue);
-      colorizeLedsSwitch();
-    }
-  }
-
-  $(function(){
-    $('[data-slider]').on('change.fndtn.slider', switchLeds);
-    $('#leds-switch').click(switchLeds);
+  $(function() {
+    drawRouletteWheel();
+    $(window).resize(drawRouletteWheel);
 
     var faye = new Faye.Client('<%= Rails.application.config.aigor.websockets_url %>');
-    faye.subscribe('/control_panel/messages', updatePanel);
+
+    faye.subscribe('/control_panel/messages', onMessageReceived);
   });
+
 
 })();
