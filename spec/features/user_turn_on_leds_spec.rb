@@ -11,15 +11,9 @@ feature 'Switch leds' do
     # page.execute_script %($('leds-switch-label').click())
   end
 
-  scenario 'it has a red selector' do
-    expect(page).to have_selector('#slide-red')
+  scenario 'it has canvas to draw a color wheel' do
+    expect(page).to have_selector('#canvas')
   end
 
-  scenario 'it has a green selector' do
-    expect(page).to have_selector('#slide-green')
-  end
 
-  scenario 'it has a blue selector' do
-    expect(page).to have_selector('#slide-blue')
-  end
 end
