@@ -6,7 +6,7 @@
   function callLedsService(red, green, blue) {
     $.ajax({
       type: 'POST',
-      url : 'api/colorize_leds.json',
+      url : '/api/colorize_leds.json',
       data: {
         power_on: $('#leds-switch').prop('checked'),
         color   : {
@@ -15,6 +15,14 @@
           blue : blue
         }
       }
+    });
+  }
+
+  function postPomodoro(minutes) {
+    $.ajax({
+      type: 'POST',
+      url : '/api/pomodoro.json',
+      data: { minutes: minutes }
     });
   }
 
@@ -107,17 +115,32 @@
   }
 
   function onMessageReceived(data) {
+    console.log(data);
     if(data.action === 'colorize_leds') {
       $('.main-section').css({'background': 'rgb(' + data.color.red + ',' + data.color.green + ',' + data.color.blue + ')'});
     }
   }
 
-  $(function() {
+  function initLedsPanel() {
+    if(!$('#lights-section').length) { return }
     drawRouletteWheel();
     $(window).resize(drawRouletteWheel);
+  }
+
+  function initPomodoroPanel() {
+    if(!$('#pomodoro-section').length) { return }
+
+    $('#go_pomodoro').click(function() {
+      var minutes = $("input[name='pomodoro_minutes']").first().val();
+      postPomodoro(minutes);
+    });
+  }
+
+  $(function() {
+    initLedsPanel();
+    initPomodoroPanel();
 
     var faye = new Faye.Client('<%= Rails.application.config.aigor.websockets_url %>');
-
     faye.subscribe('/control_panel/messages', onMessageReceived);
   });
 
