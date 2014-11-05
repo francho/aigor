@@ -62,7 +62,7 @@ def colorize_step
 
   return unless (0..255).include? green
 
-  @color_command.setColor(255, green, 0)
+  @color_command.set_color(255, green, 0)
   @color_command.execute!
 end
 
