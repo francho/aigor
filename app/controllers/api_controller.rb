@@ -12,4 +12,13 @@ class ApiController < ApplicationController
       format.json { render :text => response }
     end
   end
+
+  def pomodoro
+    command = PomodoroCommand.new
+    response=command.start params[:minutes].to_i
+    ApiHelper.websocket_broadcast('/control_panel/messages', params)
+    respond_with do |format|
+      format.json { render :text => response }
+    end
+  end
 end

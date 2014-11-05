@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   post 'api/colorize_leds'
+  post 'api/pomodoro'
 
   root 'control_panel#index'
 
