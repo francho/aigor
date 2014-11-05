@@ -36,6 +36,13 @@ describe ColorizeLedsCommand do
       command.start 1
       command.pomodoro_job.call
     end
+
+    it 'change color to show countdown' do
+      expect(command.color_command).to receive(:set_color)
+      command.start 1
+      command.color_countdown_job.call
+    end
+
   end
 
   describe 'stop' do
