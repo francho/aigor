@@ -50,6 +50,9 @@ gem 'serialport'
 # Scheluder
 gem 'rufus-scheduler', '~> 3.0.9'
 
+# Publish-Subscribe capabilities
+gem 'wisper'
+
 group :development, :test do
   gem 'rspec', '~> 3.1.0'
   gem 'rspec-rails', '~> 3.1.0'
