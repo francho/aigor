@@ -114,10 +114,22 @@
     setColor(pixelData[0],pixelData[1],pixelData[2]);
   }
 
+  function onPomodoroStep(seconds_remain) {
+    var minutes = Math.floor(seconds_remain / 60);
+    var seconds = parseInt(seconds_remain - minutes * 60);
+
+    $('#pomodoro-form').hide();
+    $('#pomodoro-countdown').show();
+
+    $('#pomodoro-countdown-timer').text(minutes+':'+ ("0" + seconds).slice(-2));
+  }
+
   function onMessageReceived(data) {
     console.log(data);
     if(data.action === 'colorize_leds') {
       $('.main-section').css({'background': 'rgb(' + data.color.red + ',' + data.color.green + ',' + data.color.blue + ')'});
+    } else if(data.action === 'pomodoro_step') {
+      onPomodoroStep(data.seconds_remain);
     }
   }
 

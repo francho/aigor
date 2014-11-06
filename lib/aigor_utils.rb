@@ -6,8 +6,9 @@ module AigorUtils
       @channel='/control_panel/messages'
     end
 
-    def pomodoro_step(minutes_remain)
-      websocket_broadcast(minutes_remain)
+    def pomodoro_step(seconds_remain)
+      data={action: 'pomodoro_step', seconds_remain: seconds_remain}
+      websocket_broadcast(data)
     end
 
     private
