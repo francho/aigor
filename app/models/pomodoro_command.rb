@@ -1,4 +1,6 @@
 class PomodoroCommand
+  include Wisper::Publisher
+
   attr_accessor :scheduler, :color_command, :green_step
 
   def initialize
@@ -64,6 +66,8 @@ def colorize_step
 
   @color_command.set_color(255, green, 0)
   @color_command.execute!
+
+  broadcast(:pomodoro_step, remain)
 end
 
 end

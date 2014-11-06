@@ -15,8 +15,9 @@ class ApiController < ApplicationController
 
   def pomodoro
     command = PomodoroCommand.new
+    command.subscribe(AigorUtils::ControlPanelNotifier.new)
     response=command.start params[:minutes].to_i
-    ApiHelper.websocket_broadcast('/control_panel/messages', params)
+
     respond_with do |format|
       format.json { render :text => response }
     end
