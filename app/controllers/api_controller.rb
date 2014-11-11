@@ -7,7 +7,9 @@ class ApiController < ApplicationController
     command = ColorizeLedsCommand.new(color[:red],color[:green],color[:blue])
     response=command.execute!
 
-    ApiHelper.websocket_broadcast('/control_panel/messages', params)
+    notifier = AigorUtils::ControlPanelNotifier.new
+    notifier.notify_color_change(params)
+
     respond_with do |format|
       format.json { render :text => response }
     end

@@ -6,12 +6,14 @@ module AigorUtils
       @channel='/control_panel/messages'
     end
 
-    def pomodoro_step(seconds_remain)
-      data={action: 'pomodoro_step', seconds_remain: seconds_remain}
-      websocket_broadcast(data)
+    def notify_color_change(color_data)
+      websocket_broadcast(color_data)
     end
 
-    private
+    def notify_pomodoro_step(seconds_remain)
+      data={:action => 'pomodoro_step', :seconds_remain => seconds_remain}
+      websocket_broadcast(data)
+    end
 
     def websocket_broadcast(params)
       message = {:channel => @channel, :data => params}
