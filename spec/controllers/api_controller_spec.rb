@@ -26,9 +26,9 @@ describe ApiController, :type => :controller do
     end
   end
 
-  describe 'POST pomodoro' do
+  describe 'POST pomodoro_start' do
     before do
-      post :pomodoro, :format => :json, :minutes => 5
+      post :pomodoro_start, :format => :json, :minutes => 5
     end
 
     after do
@@ -46,7 +46,32 @@ describe ApiController, :type => :controller do
 
     it 'emit a websocket message' do
       expect_any_instance_of(AigorUtils::ControlPanelNotifier).to receive(:notify_pomodoro_step)
-      post :pomodoro, :format => :json, :minutes => 5
+      post :pomodoro_start, :format => :json, :minutes => 5
+      sleep(2)
+    end
+  end
+
+  describe 'POST pomodoro_stop' do
+    before do
+      post :pomodoro_stop, :format => :json, :minutes => 5
+    end
+
+    after do
+      @command=PomodoroCommand.new
+      @command.stop
+    end
+
+    it 'accept POST' do
+      expect(response).to be_success
+    end
+
+    it 'is json' do
+      expect(response.headers['Content-Type']).to include 'application/json; charset=utf-8'
+    end
+
+    it 'emit a websocket message' do
+      expect_any_instance_of(AigorUtils::ControlPanelNotifier).to receive(:notify_pomodoro_stop)
+      post :pomodoro_stop, :format => :json
       sleep(2)
     end
   end

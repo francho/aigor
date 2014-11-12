@@ -15,10 +15,22 @@ class ApiController < ApplicationController
     end
   end
 
-  def pomodoro
+  def pomodoro_start
     command = PomodoroCommand.new
     command.subscribe(AigorUtils::ControlPanelNotifier.new)
     response=command.start params[:minutes].to_i
+
+    respond_with do |format|
+      format.json { render :text => response }
+    end
+  end
+
+  def pomodoro_stop
+    command = PomodoroCommand.new
+    response=command.stop
+
+    notifier = AigorUtils::ControlPanelNotifier.new
+    notifier.notify_pomodoro_stop
 
     respond_with do |format|
       format.json { render :text => response }
