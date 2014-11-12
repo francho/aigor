@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   post 'api/colorize_leds'
+  post 'api/pomodoro_start'
+  post 'api/pomodoro_stop'
 
+  get 'control_panel/pomodoro'
   root 'control_panel#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

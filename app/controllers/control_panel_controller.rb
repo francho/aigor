@@ -3,4 +3,7 @@ class ControlPanelController < ApplicationController
 
   def index
   end
+
+  def pomodoro
+  end
 end

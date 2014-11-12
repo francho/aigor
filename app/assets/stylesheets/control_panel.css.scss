@@ -16,7 +16,7 @@
   float: none;
 }
 
-.main-section, #lights-section {
+.main-section, #lights-section, #pomodoro-section, #pomodoro-countdown {
   position: relative;
   top: 0px;
   bottom: 0px;
@@ -24,4 +24,25 @@
   right: 0px;
   width: 100%;
   height:100%;
+}
+
+#pomodoro-section {
+
+  #pomodoro-form {
+    padding-top: 5em;
+  }
+
+  #pomodoro-countdown {
+
+    #pomodoro-countdown-timer {
+      font-size: 6em;
+    }
+
+    #stop-pomodoro {
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+    }
+  }
 }
