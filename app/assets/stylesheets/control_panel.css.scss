@@ -26,13 +26,23 @@
   height:100%;
 }
 
-#pomodoro-countdown-timer {
-  font-size: 6em;
-}
+#pomodoro-section {
 
-#stop-pomodoro {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  #pomodoro-form {
+    padding-top: 5em;
+  }
+
+  #pomodoro-countdown {
+
+    #pomodoro-countdown-timer {
+      font-size: 6em;
+    }
+
+    #stop-pomodoro {
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+    }
+  }
 }

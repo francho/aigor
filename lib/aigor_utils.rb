@@ -15,6 +15,10 @@ module AigorUtils
       websocket_broadcast(data)
     end
 
+    def notify_pomodoro_stop
+      websocket_broadcast({:action => 'pomodoro_stop'})
+    end
+
     def websocket_broadcast(params)
       message = {:channel => @channel, :data => params}
       uri     = URI.parse(Rails.application.config.aigor.websockets_url)

@@ -21,9 +21,16 @@
   function postPomodoro(minutes) {
     $.ajax({
       type: 'POST',
-      url : '/api/pomodoro.json',
-      data: { minutes: minutes }
+      url : '/api/pomodoro_start.json',
+      data: {minutes: minutes}
     });
+  }
+
+  function stopPomodoro() {
+    $.ajax({
+      type: 'POST',
+      url : '/api/pomodoro_stop.json'
+    })
   }
 
   function setColor(red, green, blue) {
@@ -111,41 +118,73 @@
     var canvas = $('#canvas')[0];
     var pixelData = canvas.getContext('2d').getImageData(event.offsetX, event.offsetY, 1, 1).data;
 
-    setColor(pixelData[0],pixelData[1],pixelData[2]);
+    setColor(pixelData[0], pixelData[1], pixelData[2]);
   }
 
-  function onPomodoroStep(seconds_remain) {
+  function onColorize(data) {
+    if(data.action !== 'colorize_leds') {
+      return;
+    }
+
+    $('.main-section').css({'background': 'rgb(' + data.color.red + ',' + data.color.green + ',' + data.color.blue + ')'});
+  }
+
+  function onPomodoroStep(data) {
+    if(data.action !== 'pomodoro_step') {
+      return;
+    }
+
+    var seconds_remain = data.seconds_remain
     var minutes = Math.floor(seconds_remain / 60);
     var seconds = parseInt(seconds_remain - minutes * 60);
 
-    $('#pomodoro-form').hide();
-    $('#pomodoro-countdown').show();
+    $('.pomodoro-off').hide();
+    $('.pomodoro-on').show();
 
-    $('#pomodoro-countdown-timer').text(minutes+':'+ ("0" + seconds).slice(-2));
+    $('#pomodoro-countdown-timer').text(minutes + ':' + ("0" + seconds).slice(-2));
+  }
+
+  function onPomodoroStop(data) {
+    if(data.action !== 'pomodoro_stop') {
+      return;
+    }
+
+    setColor(255,255,0);
+
+    $('.pomodoro-on').hide();
+    $('.pomodoro-off').show();
   }
 
   function onMessageReceived(data) {
     console.log(data);
-    if(data.action === 'colorize_leds') {
-      $('.main-section').css({'background': 'rgb(' + data.color.red + ',' + data.color.green + ',' + data.color.blue + ')'});
-    } else if(data.action === 'pomodoro_step') {
-      onPomodoroStep(data.seconds_remain);
-    }
+
+    onColorize(data);
+    onPomodoroStep(data);
+    onPomodoroStop(data);
   }
 
   function initLedsPanel() {
-    if(!$('#lights-section').length) { return }
+    if(!$('#lights-section').length) {
+      return
+    }
     drawRouletteWheel();
     $(window).resize(drawRouletteWheel);
   }
 
   function initPomodoroPanel() {
-    if(!$('#pomodoro-section').length) { return }
+    if(!$('#pomodoro-section').length) {
+      return
+    }
 
-    $('#go_pomodoro').click(function() {
+    $('pomodoro-on').hide();
+    $('pomodoro-off').show();
+
+    $('#go-pomodoro').click(function() {
       var minutes = $("input[name='pomodoro_minutes']").first().val();
       postPomodoro(minutes);
     });
+
+    $('#stop-pomodoro').click(stopPomodoro);
   }
 
   $(function() {
