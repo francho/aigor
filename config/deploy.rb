@@ -10,7 +10,7 @@ set :rails_env, 'production'
 
 # Capistrano-rbenv gem
 set :rbenv_type, :user
-set :rbenv_ruby, '2.1.1'
+set :rbenv_ruby, '2.1.2'
 
 # Capistrano-bundler gem
 set :bundle_without, %w{development test darwin}.join(' ')
