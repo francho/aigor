@@ -30,3 +30,5 @@ bower.json
 .idea
 
 config/aigor.yml
+
+.DS_Store
