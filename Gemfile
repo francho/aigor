@@ -43,6 +43,8 @@ gem 'foundation-rails'
 # Websockets
 gem 'faye-rails'
 gem 'thin'
+gem 'faye'
+gem 'rake'
 
 # SerialPort
 gem 'serialport'
