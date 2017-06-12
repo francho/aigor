@@ -1,2 +1,2 @@
-app: bundle exec rails s
-websockets: rackup faye.ru -s thin -E production -o 192.168.33.5
+app: bundle exec rails s -e production
+websockets: rackup faye.ru -s thin -E production -o 0.0.0.0
