@@ -29,7 +29,7 @@ set :bundle_without, %w{development test darwin}.join(' ')
 set :format, :pretty
 
 # Default value for :log_level is :debug
-set :log_level, :debug
+set :log_level, :info
 
 # Default value for :pty is false
 set :pty, false
