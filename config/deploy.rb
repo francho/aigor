@@ -15,6 +15,7 @@ set :nvm_map_bins, %w{node npm yarn nvm-exec}
 # set :nvm_custom_path, '$HOME/.nvm'
 
 # Capistrano-rbenv gem
+set :rbenv_type, :user
 set :rbenv_ruby, File.read('.ruby-version').strip
 
 # set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
@@ -23,6 +24,7 @@ set :rbenv_roles, :all # default value
 
 # Capistrano-bundler gem
 set :bundle_without, %w{development test darwin}.join(' ')
+set :bundle_flags, ''
 
 
 # Default value for :format is :pretty
