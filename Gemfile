@@ -36,9 +36,9 @@ gem 'spring', group: :development
 gem 'foundation-rails'
 
 # Websockets
-gem 'faye-rails'
+gem 'faye-rails', '~> 2.0.0'
 gem 'thin'
-gem 'faye'
+gem 'faye', '~> 1.0.3'
 gem 'rake'
 
 # SerialPort
